@@ -1,72 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+/**
+ * TODO
+ * [ ] convert activities to state
+ * [ ] finish add handler
+ * [ ] finish delete handler
+ * [ ] finish update handler
+ * [ ] finish toggle handler
+ * [ ] finish toggle handler
+ * [ ] apply local storage
+ */
+
+import React, { useState } from "react";
 import Header from "./Header";
 import Input from "./Input";
 import List from "./List";
 
 const Container = () => {
-  function getInitialActivities() {
-    const temp = localStorage.getItem("activities");
-    const savedActivities = JSON.parse(temp);
-    return savedActivities || [];
-  }
-  const [activities, setActivities] = useState(getInitialActivities());
+  // const _handleAdd = () => {};
 
-  const _handleAdd = (title) => {
-    const newActivity = {
-      id: uuidv4(),
-      title,
-      completed: false,
-    };
-    setActivities([...activities, newActivity]);
-  };
+  const _handleAdd = (title) => {};
 
-  const _handleDelete = (id) => {
-    setActivities([...activities.filter((activity) => activity.id !== id)]);
-  };
+  const _handleDelete = () => {};
 
-  const _handleUpdate = (updatedTitle, id) => {
-    setActivities(
-      activities.map((activity) => {
-        if (activity.id === id) {
-          activity.title = updatedTitle;
-        }
-        return activity;
-      })
-    );
-  };
+  const _handleUpdate = () => {};
 
-  const _handleToggle = (id) => {
-    setActivities((prevState) =>
-      prevState.map((activity) => {
-        if (activity.id === id) {
-          return {
-            ...activity,
-            completed: !activity.completed,
-          };
-        }
-        return activity;
-      })
-    );
-  };
+  const _handleToggle = () => {};
 
-  useEffect(() => {
-    const temp = JSON.stringify(activities);
-    localStorage.setItem("activities", temp);
-  }, [activities]);
+  const activities = [
+    {
+      id: 1,
+      title: "activity 1",
+      complete: false,
+    },
+    {
+      id: 2,
+      title: "activity 2",
+      complete: false,
+    },
+  ];
 
   return (
     <>
       <div className="container">
         <div className="inner">
           <Header />
-          <Input handleAdd={_handleAdd} />
-          <List
-            activities={activities}
-            handleToggle={_handleToggle}
-            handleDelete={_handleDelete}
-            handleUpdate={_handleUpdate}
-          />
+          <Input />
+          <List activities={activities} />
         </div>
       </div>
     </>
